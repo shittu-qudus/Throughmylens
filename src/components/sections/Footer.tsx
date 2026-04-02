@@ -18,7 +18,7 @@ export function Footer() {
           >
             <div className="flex items-center gap-2 mb-4">
               <FaCamera className="w-6 h-6" />
-              <span className="text-xl tracking-wider">SOPHIE REYNOLDS</span>
+              <span className="text-xl tracking-wider">THROUGHMYLENS</span>
             </div>
             <p className="text-white/70 leading-relaxed">
               Creating timeless, elegant imagery for life's most precious moments.

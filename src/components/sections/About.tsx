@@ -37,7 +37,7 @@ export function About() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-4xl md:text-5xl mb-6 tracking-tight"
             >
-              About Sophie
+              About throughmylens
             </motion.h2>
             <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
               {[

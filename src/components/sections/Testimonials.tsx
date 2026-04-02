@@ -8,7 +8,7 @@ const testimonials = [
     id: 1,
     name: 'Emily & James',
     event: 'Wedding',
-    text: 'Sophie captured our wedding day perfectly. Every emotion, every detail - the photos are absolutely stunning. We couldn\'t be happier with the results!',
+    text: 'They captured our wedding day perfectly. Every emotion, every detail - the photos are absolutely stunning. We couldn\'t be happier with the results!',
     rating: 5,
     image: 'https://ui-avatars.com/api/?name=Emily+James&background=000&color=fff&size=128',
   },

@@ -12,6 +12,7 @@ import { FAQ } from '@/components/sections/FAQ';
 import { Footer } from '@/components/sections/Footer';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import FloatingWhatsApp from '@/components/sections/Floatingwhatsapp';    
 
 export default function App() {
   const scrollToSection = (id: string) => {
@@ -23,6 +24,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      <FloatingWhatsApp phoneNumber="441234567890" />
       <Navbar />
       
       {/* HERO - Full screen, high emphasis */}
@@ -88,7 +90,7 @@ export default function App() {
       <Contact />
 
       {/* FAQ - Supporting information */}
-      <FAQ />
+      <FAQ />     
 
       {/* FOOTER - Closure */}
       <Footer />

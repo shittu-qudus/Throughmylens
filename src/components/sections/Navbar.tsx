@@ -52,7 +52,7 @@ export function Navbar() {
           >
             <Camera className={`w-6 h-6 transition-colors duration-300 ${isScrolled ? 'text-black' : 'text-white'}`} />
             <span className={`text-xl tracking-wider transition-colors duration-300 ${isScrolled ? 'text-black' : 'text-white'}`}>
-              SOPHIE REYNOLDS
+              THROUGHMYLENS
             </span>
           </motion.div>
 

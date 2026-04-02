@@ -1,25 +1,18 @@
-// /Users/rarelyseen/photography/mylens/src/app/api/create-checkout-session/route.ts
+// src/app/api/create-checkout-session/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-04-10',
+  apiVersion: '2026-03-25.dahlia', // ✅
 });
-
 export async function POST(request: NextRequest) {
-  console.log('Create checkout session API route hit!'); // Debug log
-  
+  console.log('Create checkout session API route hit!');
   try {
     const body = await request.json();
-    console.log('Request body:', body);
-    
     const { packageLabel, price, metadata } = body;
 
     if (!packageLabel || !price) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
@@ -61,10 +54,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error('Stripe session error:', err);
     return NextResponse.json(
-      { 
-        error: 'Failed to create checkout session', 
-        detail: err instanceof Error ? err.message : String(err) 
-      },
+      { error: 'Failed to create checkout session', detail: err instanceof Error ? err.message : String(err) },
       { status: 500 }
     );
   }
