@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { getTomorrowsBookings, markReminderSent } from '@/lib/googleSheets';
 import { sendReminderEmail } from '@/lib/emails';
