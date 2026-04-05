@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Star, CheckCircle2, Camera } from 'lucide-react';
-
+import Image from 'next/image';
 
 const EVENT_TYPES = [
   'Wedding', 'Maternity', 'Portrait', 'Graduation',
@@ -127,10 +127,13 @@ export default function FeedbackPage() {
             Back
           </Link>
           <div className="flex items-center gap-2 text-gray-500">
-            <Camera className="w-4 h-4" />
-            <span className="text-xs tracking-widest uppercase" style={{ fontFamily: 'system-ui, sans-serif' }}>
-              Through My Lens
-            </span>
+              <Image
+                          src="/images/logo.png"
+                          alt="Through My Lens Logo"
+                          width={32}
+                          height={32}
+                          className="w-8 h-8 object-contain"
+                        />
           </div>
         </div>
       </header>

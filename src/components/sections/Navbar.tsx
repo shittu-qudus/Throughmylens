@@ -118,7 +118,7 @@ export function Navbar() {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X className="w-6 h-6 text-white" />
+                  <X className="w-6 h-6 text-black" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -128,7 +128,7 @@ export function Navbar() {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu className="w-6 h-6 text-white" />
+                  <Menu className="w-6 h-6 text-black" />
                 </motion.div>
               )}
             </AnimatePresence>
