@@ -3,11 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Star, CheckCircle2, Camera } from 'lucide-react';
+import type { Metadata } from 'next';
 
 const EVENT_TYPES = [
   'Wedding', 'Maternity', 'Portrait', 'Graduation',
   'Lifestyle', 'Eid', 'Family', 'Other',
 ];
+
+
+export const metadata: Metadata = {
+  title: 'Leave Feedback',
+  description: 'Share your experience with Through My Lens photography studio.',
+  robots: { index: false, follow: false }, // don't index feedback form
+};
 
 const PROFESSIONALISM_OPTIONS = [
   'Extremely professional', 'Very professional',

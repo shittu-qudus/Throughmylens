@@ -1,6 +1,7 @@
 "use client";
 import { FaCamera, FaInstagram, FaFacebook, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -17,8 +18,13 @@ export function Footer() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex items-center gap-2 mb-4">
-              <FaCamera className="w-6 h-6" />
-              <span className="text-xl tracking-wider">THROUGHMYLENS</span>
+             <Image
+                           src="/images/logo.png"
+                           alt="Through My Lens Logo"
+                           width={32}
+                           height={32}
+                           className="w-8 h-8 object-contain"
+                         />
             </div>
             <p className="text-white/70 leading-relaxed">
               Creating timeless, elegant imagery for life's most precious moments.
@@ -96,7 +102,7 @@ export function Footer() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="pt-8 border-t border-white/20 text-center text-white/60 text-sm"
         >
-          <p>&copy; {currentYear} Sophie Reynolds Photography. All rights reserved.</p>
+          <p>&copy; {currentYear} Through My Lens. All rights reserved.</p>
         </motion.div>
       </div>
     </footer>

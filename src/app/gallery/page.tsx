@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, X } from 'lucide-react';
 
+
 const allImages = [
   // Graduation
   { id: 1,  url: 'images/graduation/graduation1.jpg', category: 'Graduation' },

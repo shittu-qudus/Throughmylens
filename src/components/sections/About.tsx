@@ -16,7 +16,7 @@ export function About() {
           >
             <motion.img
               src="https://images.unsplash.com/photo-1595280253553-047d569a94b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxicml0aXNoJTIwcGhvdG9ncmFwaGVyJTIwcHJvZmVzc2lvbmFsJTIwY2FtZXJhfGVufDF8fHx8MTc3NDIzMzcwMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-              alt="Sophie Reynolds Photography"
+              alt="Unsplash Photography"
               className="w-full h-[600px] object-cover transition-transform duration-700 hover:scale-105"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}

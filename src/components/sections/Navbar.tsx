@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Camera, Menu, X } from 'lucide-react';
 import { Button } from '../ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,6 +43,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
+
           {/* Logo */}
           <motion.div
             className="flex items-center gap-2 cursor-pointer"
@@ -50,10 +52,14 @@ export function Navbar() {
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}
           >
-            <Camera className={`w-6 h-6 transition-colors duration-300 ${isScrolled ? 'text-black' : 'text-white'}`} />
-            <span className={`text-xl tracking-wider transition-colors duration-300 ${isScrolled ? 'text-black' : 'text-white'}`}>
-              THROUGHMYLENS
-            </span>
+           <Image
+              src="/images/logo.png"
+              alt="Through My Lens Logo"
+              width={32}
+              height={32}
+              className="w-8 h-8 object-contain"
+            />
+            
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -87,7 +93,11 @@ export function Navbar() {
           >
             <Button
               onClick={() => scrollToSection('availability')}
-              className="bg-black text-white hover:bg-black/80 px-6 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className={`px-6 transition-all duration-300 hover:scale-105 ${
+                isScrolled
+                  ? 'bg-black text-white hover:bg-black/80'
+                  : 'border border-white/70 text-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-black'
+              }`}
             >
               Book Now
             </Button>
@@ -108,7 +118,7 @@ export function Navbar() {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X className={`w-6 h-6 ${isScrolled ? 'text-black' : 'text-white'}`} />
+                  <X className="w-6 h-6 text-white" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -118,7 +128,7 @@ export function Navbar() {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu className={`w-6 h-6 ${isScrolled ? 'text-black' : 'text-white'}`} />
+                  <Menu className="w-6 h-6 text-white" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -133,7 +143,7 @@ export function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="md:hidden bg-white border-t border-gray-200 overflow-hidden"
+              className="md:hidden bg-black/60 backdrop-blur-md border-t border-white/10 overflow-hidden"
             >
               <div className="flex flex-col gap-1 py-4">
                 {navItems.map((item, index) => (
@@ -144,7 +154,7 @@ export function Navbar() {
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-black hover:bg-neutral-100 text-left px-4 py-3 transition-colors duration-200"
+                    className="text-white hover:bg-white/10 text-left px-4 py-3 transition-colors duration-200"
                     whileTap={{ scale: 0.98 }}
                   >
                     {item.label}
@@ -159,7 +169,7 @@ export function Navbar() {
                 >
                   <Button
                     onClick={() => scrollToSection('availability')}
-                    className="w-full bg-black text-white hover:bg-black/80 transition-all duration-300"
+                    className="w-full border border-white/70 text-white bg-white/10 hover:bg-white hover:text-black transition-all duration-300"
                   >
                     Book Now
                   </Button>
