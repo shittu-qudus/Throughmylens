@@ -28,8 +28,8 @@ export function Navbar() {
   const navItems = [
     { id: 'portfolio', label: 'Portfolio' },
     { id: 'services', label: 'Services' },
-    { id: 'pricing', label: 'Pricing' },
-    { id: 'contact', label: 'Contact' },
+    { id: 'Testimonials', label: 'Testimonials' },
+    { id: 'Reserve', label: 'Reserve a date' },
   ];
 
   return (

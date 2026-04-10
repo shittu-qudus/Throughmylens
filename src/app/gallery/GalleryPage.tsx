@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import GalleryPage from './GalleryPage';
+import GalleryPage from './page';
 
 export const metadata: Metadata = {
   title: 'Full Gallery',

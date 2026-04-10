@@ -7,12 +7,6 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS with your public key
-// You'll need to add these to your .env.local file:
-// NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
-// NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CUSTOMER=your_customer_template_id
-// NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_ADMIN=your_admin_template_id
-// NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
 
 function SuccessContent() {
   const params = useSearchParams();

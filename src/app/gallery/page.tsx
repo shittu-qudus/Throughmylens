@@ -13,11 +13,11 @@ const allImages = [
   // Lifestyle
   { id: 4,  url: 'images/lifestyle/lifestyle.JPG',    category: 'Lifestyle' },
   { id: 5,  url: 'images/lifestyle/lifestyle2.jpg',   category: 'Lifestyle' },
-  { id: 6,  url: 'images/lifestyle/lifestyle3.jpg',   category: 'Lifestyle' },
+  { id: 6,  url: 'images/lifestyle/lifestyle3.jpg',   category: 'Graduation' },
   { id: 7,  url: 'images/lifestyle/lifestyle4.jpg',   category: 'Lifestyle' },
-  { id: 8,  url: 'images/lifestyle/lifestyle5.jpg',   category: 'Lifestyle' },
+  { id: 8,  url: 'images/lifestyle/lifestyle5.jpg',   category: 'Brand' },
   // Maternity
-  { id: 9,  url: 'images/maternity/mat1.jpg',         category: 'Maternity' },
+  { id: 9,  url: 'images/maternity/mat1.jpg',         category: 'Family' },
   { id: 10, url: 'images/maternity/mat2.jpg',         category: 'Maternity' },
   { id: 11, url: 'images/maternity/mat3.jpg',         category: 'Maternity' },
   { id: 12, url: 'images/maternity/mat4.jpg',         category: 'Maternity' },
@@ -30,7 +30,7 @@ const allImages = [
   { id: 17, url: 'images/eid/eid2.jpg',               category: 'Eid' },
 ];
 
-const categories = ['All', 'Graduation', 'Lifestyle', 'Maternity', 'Nights', 'Eid'];
+const categories = ['All', 'Graduation', 'Lifestyle', 'Maternity', 'Nights', 'Eid', 'Brand', 'Family'];
 
 export default function GalleryPage() {
   const [active, setActive] = useState('All');

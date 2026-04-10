@@ -1,5 +1,5 @@
 "use client";
-import { FaCamera, FaInstagram, FaFacebook, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaInstagram, FaEnvelope, FaPhone, FaMapMarkerAlt,FaTiktok } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -71,7 +71,7 @@ export function Footer() {
             <div className="flex gap-4">
               {[
                 { href: 'https://instagram.com', icon: FaInstagram, label: 'Instagram' },
-                { href: 'https://facebook.com', icon: FaFacebook, label: 'Facebook' },
+                { href: 'https://tiktok.com', icon: FaTiktok, label: 'TikTok' },
                 { href: 'mailto:hello@sophiereynolds.co.uk', icon: FaEnvelope, label: 'Email' },
               ].map((social, index) => (
                 <motion.a

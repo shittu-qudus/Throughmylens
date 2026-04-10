@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     question: 'When will we receive our photographs?',
-    answer: 'All clients receive a curated sneak peek within 48 hours. Full gallery delivery timelines depend on your package: Essential (3 weeks), Premium (2 weeks), and Luxury (1 week with same-day preview highlights). Every image is hand-edited to our signature standard.',
+    answer: 'All clients receive a curated sneak peek within 72 hours for every type of shoot, except maternity sessions, which take up to 1 week. Every image is carefully hand-edited to meet our signature standard before delivery.',
   },
   {
     question: 'Can we share a list of must-have shots?',
@@ -29,11 +29,11 @@ const faqs = [
   },
   {
     question: 'Do you supply raw or unedited files?',
-    answer: 'We deliver professionally edited images only. Post-processing is integral to our artistic practice — raw files do not represent our work and are not included in any package. What you receive is fully finished, print-ready photography.',
+    answer: 'All raw images will be provided to you after your shoot',
   },
   {
     question: 'What are your payment and cancellation terms?',
-    answer: 'A 25% retainer is required to secure your date. This retainer is non-refundable but transferable to a rescheduled date within 18 months. Remaining balances are due 4 weeks before the event. Full terms are provided in your contract at the point of booking.',
+    answer: 'A 75% retainer is required to secure your date. This retainer is non-refundable but can be transferred to a rescheduled date within 3 months. The remaining balance must be paid before the event. Full terms will be provided in your contract at the point of booking.',
   },
 ];
 

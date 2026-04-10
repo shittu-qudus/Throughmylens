@@ -8,11 +8,11 @@ const portfolioImages = [
   { id: 1, url: 'images/graduation/graduation1.jpg', category: 'Graduation', size: 'large' },
   { id: 2, url: 'images/lifestyle/lifestyle4.jpg', category: 'Lifestyle', size: 'medium' },
   { id: 3, url: 'images/maternity/mat1.jpg', category: 'Maternity', size: 'medium' },
-  { id: 4, url: 'images/maternity/mat4.jpg', category: 'Maternity', size: 'tall' },
+  { id: 4, url: 'images/maternity/mat4.jpg', category: 'Family', size: 'tall' },
   { id: 5, url: 'images/nights/night2.jpg', category: 'Nights', size: 'wide' },
   { id: 6, url: 'images/eid/eid1.jpg', category: 'Eid', size: 'medium' },
   { id: 7, url: 'images/graduation/graduation2.jpg', category: 'Graduation', size: 'medium' },
-  { id: 8, url: 'images/lifestyle/lifestyle5.jpg', category: 'Lifestyle', size: 'medium' },
+  { id: 8, url: 'images/lifestyle/lifestyle5.jpg', category: 'Brand', size: 'medium' },
   { id: 9, url: 'images/lifestyle/lifestyle2.jpg', category: 'Lifestyle', size: 'medium' },
 ];
 
