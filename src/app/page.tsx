@@ -63,7 +63,7 @@ export default function App() {
       </div>
 
       {/* AVAILABILITY - High emphasis section with distinct background */}
-      <Availability onBookDate={() => scrollToSection('contact')} />
+      <Availability onBookDate={() => scrollToSection('Reserve')} />
 
       {/* Transition element */}
       <div className="h-16 bg-gradient-to-b from-gradient-to-br from-neutral-50 via-white to-neutral-50 to-neutral-50" />
@@ -81,7 +81,7 @@ export default function App() {
       <div className="h-1 bg-gradient-to-r from-transparent via-black to-transparent" />
 
       {/* CTA - High emphasis, impossible to miss */}
-      <CTA onBookSession={() => scrollToSection('contact')} />
+      <CTA onBookSession={() => scrollToSection('Reserve')} />
 
       {/* Transition from dark CTA to light contact */}
       <div className="h-24 bg-gradient-to-b from-black to-neutral-50" />
