@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
-@import 'tw-animate-css';
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 
 @custom-variant dark (&:is(.dark *));
@@ -129,7 +128,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+      border-color: var(--border);
   }
 
   html {

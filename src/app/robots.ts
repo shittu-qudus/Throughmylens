@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/booking-success'],
       },
     ],
-    sitemap: 'https://www.throughmylens.uk//sitemap.xml',
+    sitemap: 'https://www.throughmylens.uk/sitemap.xml',
   };
 }

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.throughmylens.uk/';
+  const baseUrl = 'https://www.throughmylens.uk';
   const now = new Date();
 
   return [
