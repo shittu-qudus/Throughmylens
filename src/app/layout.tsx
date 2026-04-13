@@ -1,9 +1,9 @@
 // src/app/layout.tsx
-import './globals.css';
+// import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://throughmylens.vercel.app'),
+  metadataBase: new URL('https://www.throughmylens.uk/'),
   title: {
     default: 'Through My Lens | Luxury Photography London & UK',
     template: '%s | Through My Lens',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_GB',
-    url: 'https://throughmylens.vercel.app',
+    url: 'https://www.throughmylens.uk/',
     siteName: 'Through My Lens',
     title: 'Through My Lens | Luxury Photography London & UK',
     description:
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     title: 'Through My Lens | Luxury Photography London & UK',
     description:
       'Award-winning photography studio specialising in weddings, maternity, graduation and portrait sessions across London and throughout the UK.',
-    images: ['/og-image.jpg'],
+    images: ['images/logo.png'],
   },
   robots: {
     index: true,
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://throughmylens.vercel.app',
+    canonical: 'https://www.throughmylens.uk/',
   },
 };
 
@@ -77,7 +77,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'ProfessionalService',
               name: 'Through My Lens',
-              url: 'https://throughmylens.vercel.app',
+              url: 'https://www.throughmylens.uk/',
               description:
                 'Award-winning photography studio in London specialising in weddings, maternity, graduation and portrait sessions.',
               address: {
@@ -86,8 +86,8 @@ export default function RootLayout({
                 addressCountry: 'GB',
               },
               priceRange: '££',
-              telephone: '+442079460958',
-              image: 'https://throughmylens.vercel.app/og-image.jpg',
+              telephone: '+447511725288',
+              image: 'https://www.throughmylens.uk/images/logo.png',
               sameAs: [],
             }),
           }}

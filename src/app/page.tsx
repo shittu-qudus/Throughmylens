@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      <FloatingWhatsApp phoneNumber="441234567890" />
+      <FloatingWhatsApp phoneNumber="+447511725288" />
       <Navbar />
       
       {/* HERO - Full screen, high emphasis */}

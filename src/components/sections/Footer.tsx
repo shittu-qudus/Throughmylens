@@ -70,8 +70,8 @@ export function Footer() {
             <h3 className="text-lg mb-4">Follow Us</h3>
             <div className="flex gap-4">
               {[
-                { href: 'https://instagram.com', icon: FaInstagram, label: 'Instagram' },
-                { href: 'https://tiktok.com', icon: FaTiktok, label: 'TikTok' },
+                { href: 'https://www.instagram.com/_throughmylens.uk?igsh=MXF1aTJrNnRleWRtcg==', icon: FaInstagram, label: 'Instagram' },
+                { href: 'https://www.tiktok.com/@throughmylens.uk?_r=1&_t=ZN-95SRBeVvFMU', icon: FaTiktok, label: 'TikTok' },
                 { href: 'mailto:hello@sophiereynolds.co.uk', icon: FaEnvelope, label: 'Email' },
               ].map((social, index) => (
                 <motion.a

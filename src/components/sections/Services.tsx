@@ -4,7 +4,7 @@ import { Star, Camera, Heart, Users, Calendar } from 'lucide-react';
 import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import Link from 'next/link';
 
-const WHATSAPP_NUMBER = '447XXXXXXXXX';
+const WHATSAPP_NUMBER = '+447511725288';
 const EMAIL_ADDRESS = 'hello@throughmylens.co.uk';
 
 const EVENT_PACKAGES = [
