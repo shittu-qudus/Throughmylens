@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Calendar as CalendarIcon, CheckCircle2, XCircle, Sparkles, Loader2 } from 'lucide-react';
+import { Calendar as CalendarIcon, CheckCircle2, XCircle, Sparkles, Loader2, Clock } from 'lucide-react';
 import { Button } from '../ui/button';
 import { DayPicker } from 'react-day-picker';
 import { Card } from '../ui/card';
@@ -11,14 +11,21 @@ interface AvailabilityProps {
   onBookDate: () => void;
 }
 
-async function fetchBookedDays(year: number, month: number): Promise<string[]> {
+// API returns both fully booked days and busy (partially booked) days
+async function fetchAvailability(year: number, month: number): Promise<{
+  bookedDays: string[];
+  busyDays: string[];
+}> {
   const start = new Date(year, month - 1, 1);
   const end = new Date(year, month + 1, 0);
   const fmt = (d: Date) => d.toISOString().split('T')[0];
   const res = await fetch(`/api/availability?start=${fmt(start)}&end=${fmt(end)}`);
   if (!res.ok) throw new Error('Failed to fetch availability');
-  const data: { bookedDays: string[] } = await res.json();
-  return data.bookedDays;
+  const data: { bookedDays: string[]; busyDays?: string[] } = await res.json();
+  return {
+    bookedDays: data.bookedDays ?? [],
+    busyDays: data.busyDays ?? [],
+  };
 }
 
 const toDateString = (date: Date) => date.toISOString().split('T')[0];
@@ -40,10 +47,12 @@ export function Availability({ onBookDate }: AvailabilityProps) {
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
+  const [isBusy, setIsBusy] = useState(false);
   const [visibleMonth, setVisibleMonth] = useState<Date>(
     new Date(today.getFullYear(), today.getMonth(), 1)
   );
   const [bookedDayStrings, setBookedDayStrings] = useState<Set<string>>(new Set());
+  const [busyDayStrings, setBusyDayStrings] = useState<Set<string>>(new Set());
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [fetchError, setFetchError] = useState<string | null>(null);
 
@@ -51,8 +60,9 @@ export function Availability({ onBookDate }: AvailabilityProps) {
     setLoadingAvailability(true);
     setFetchError(null);
     try {
-      const days = await fetchBookedDays(year, month);
-      setBookedDayStrings(prev => new Set([...prev, ...days]));
+      const { bookedDays, busyDays } = await fetchAvailability(year, month);
+      setBookedDayStrings(prev => new Set([...prev, ...bookedDays]));
+      setBusyDayStrings(prev => new Set([...prev, ...busyDays]));
     } catch (err) {
       console.error(err);
       setFetchError('Could not load availability. Please try again.');
@@ -65,7 +75,6 @@ export function Availability({ onBookDate }: AvailabilityProps) {
     loadAvailability(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1);
   }, [visibleMonth, loadAvailability]);
 
-  // Derive booked Date objects once per bookedDayStrings change
   const bookedDateObjects = useMemo(() =>
     Array.from(bookedDayStrings).map(s => {
       const [y, m, d] = s.split('-').map(Number);
@@ -74,10 +83,27 @@ export function Availability({ onBookDate }: AvailabilityProps) {
     [bookedDayStrings]
   );
 
+  const busyDateObjects = useMemo(() =>
+    Array.from(busyDayStrings).map(s => {
+      const [y, m, d] = s.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }),
+    [busyDayStrings]
+  );
+
   const handleDateSelect = useCallback((date: Date | undefined) => {
     setSelectedDate(date);
-    setIsAvailable(date ? !bookedDayStrings.has(toDateString(date)) : null);
-  }, [bookedDayStrings]);
+    if (!date) {
+      setIsAvailable(null);
+      setIsBusy(false);
+      return;
+    }
+    const ds = toDateString(date);
+    const booked = bookedDayStrings.has(ds);
+    const busy = busyDayStrings.has(ds);
+    setIsAvailable(!booked);
+    setIsBusy(!booked && busy);
+  }, [bookedDayStrings, busyDayStrings]);
 
   return (
     <section
@@ -103,10 +129,7 @@ export function Availability({ onBookDate }: AvailabilityProps) {
               <CalendarIcon className="w-6 h-6" />
             </div>
           </div>
-          <h2
-            id="availability-heading"
-            className="text-4xl md:text-5xl mb-4 tracking-tight"
-          >
+          <h2 id="availability-heading" className="text-4xl md:text-5xl mb-4 tracking-tight">
             Check Your Date
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -117,7 +140,6 @@ export function Availability({ onBookDate }: AvailabilityProps) {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
             </span>
-       
           </div>
         </motion.header>
 
@@ -185,8 +207,9 @@ export function Availability({ onBookDate }: AvailabilityProps) {
                   .custom-calendar .rdp-day {
                     width: 3rem; height: 3rem; border-radius: 9999px;
                     font-size: 0.95rem; transition: all 0.2s; border: 2px solid transparent;
+                    position: relative;
                   }
-                  .custom-calendar .rdp-day:not(.rdp-day_disabled):not(.rdp-day_outside):hover {
+                  .custom-calendar .rdp-day:not(.rdp-day_disabled):not(.rdp-day_outside):not(.booked-date):hover {
                     background: #f3f4f6; transform: scale(1.1);
                   }
                   .custom-calendar .rdp-day_selected {
@@ -195,12 +218,36 @@ export function Availability({ onBookDate }: AvailabilityProps) {
                   }
                   .custom-calendar .rdp-day_disabled { opacity: 0.3; cursor: not-allowed; }
                   .custom-calendar .rdp-day_outside { opacity: 0.3; }
+
+                  /* Fully booked — red strikethrough */
                   .custom-calendar .booked-date {
-                    background: #fee2e2; border-color: #fca5a5; color: #ef4444;
-                    text-decoration: line-through; opacity: 0.6;
+                    background: #fee2e2 !important;
+                    border: 1.5px solid #fca5a5 !important;
+                    color: #ef4444 !important;
+                    text-decoration: line-through;
+                    opacity: 0.65;
+                    cursor: not-allowed;
                   }
-                  .custom-calendar .booked-date:hover { background: #fecaca !important; transform: scale(1.05); }
-                  .custom-calendar .rdp-day_today { font-weight: 700; border: 2px solid #d1d5db; }
+                  .custom-calendar .booked-date:hover {
+                    background: #fecaca !important;
+                    transform: none !important;
+                  }
+
+                  /* Busy — yellow dashed border */
+                  .custom-calendar .busy-date {
+                    background: #fefce8 !important;
+                    border: 2px dashed #fbbf24 !important;
+                    color: #92400e !important;
+                  }
+                  .custom-calendar .busy-date:hover {
+                    background: #fef9c3 !important;
+                    transform: scale(1.1);
+                  }
+
+                  .custom-calendar .rdp-day_today:not(.booked-date):not(.busy-date):not(.rdp-day_selected) {
+                    font-weight: 700;
+                    border: 2px solid #d1d5db;
+                  }
                 `}</style>
 
                 <DayPicker
@@ -209,13 +256,41 @@ export function Availability({ onBookDate }: AvailabilityProps) {
                   onSelect={handleDateSelect}
                   month={visibleMonth}
                   onMonthChange={setVisibleMonth}
-                  disabled={(date) => date < today}
-                  modifiers={{ booked: bookedDateObjects }}
-                  modifiersClassNames={{ booked: 'booked-date' }}
+                  disabled={(date) => date < today || bookedDayStrings.has(toDateString(date))}
+                  modifiers={{
+                    booked: bookedDateObjects,
+                    busy: busyDateObjects,
+                  }}
+                  modifiersClassNames={{
+                    booked: 'booked-date',
+                    busy: 'busy-date',
+                  }}
                   className="custom-calendar"
                   fromDate={today}
                   toDate={new Date(2027, 11, 31)}
                 />
+
+                {/* Legend */}
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3"
+                     style={{ fontFamily: 'system-ui, sans-serif' }}>
+                    Legend
+                  </p>
+                  <div className="flex flex-wrap gap-x-5 gap-y-2" style={{ fontFamily: 'system-ui, sans-serif' }}>
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-white border-2 border-gray-300 inline-block" />
+                      <span className="text-xs text-gray-500">Available</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-yellow-50 border-2 border-dashed border-yellow-400 inline-block" />
+                      <span className="text-xs text-gray-500">Filling up</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-red-100 border border-red-300 inline-block" style={{ textDecoration: 'line-through' }} />
+                      <span className="text-xs text-gray-500">Fully booked</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Result column */}
@@ -238,7 +313,59 @@ export function Availability({ onBookDate }: AvailabilityProps) {
                       <p className="text-gray-400">Choose a date to check availability</p>
                     </motion.div>
 
+                  ) : isAvailable && isBusy ? (
+                    /* Busy / filling up state */
+                    <motion.div
+                      key="busy"
+                      role="status"
+                      aria-live="polite"
+                      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                      transition={{ duration: 0.4, type: 'spring' }}
+                      className="w-full"
+                    >
+                      <div className="bg-yellow-50 border-2 border-dashed border-yellow-400 rounded-2xl p-8 text-center relative overflow-hidden">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.2, type: 'spring' }}
+                        >
+                          <div aria-hidden="true" className="bg-yellow-400 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Clock className="w-10 h-10 text-white" />
+                          </div>
+                        </motion.div>
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 }}
+                        >
+                          <p className="text-2xl text-yellow-900 mb-1 font-light tracking-wide">Filling Up Fast</p>
+                          <p className="text-sm text-yellow-700 mb-4" style={{ fontFamily: 'system-ui, sans-serif' }}>
+                            This date is getting busy — we may have limited availability
+                          </p>
+                          <div className="bg-white/80 border border-yellow-200 rounded-lg p-4 mb-6">
+                            <time dateTime={toDateString(selectedDate)} className="text-gray-700 text-lg tracking-tight">
+                              {formatDate(selectedDate)}
+                            </time>
+                          </div>
+                          <Button
+                            onClick={onBookDate}
+                            size="lg"
+                            className="bg-yellow-400 text-yellow-900 hover:bg-yellow-300 w-full text-lg py-6 font-medium tracking-wide transition-all hover:scale-105 border-0"
+                          >
+                            <CheckCircle2 aria-hidden="true" className="w-5 h-5 mr-2" />
+                            Reserve This Date
+                          </Button>
+                          <p className="text-xs text-yellow-700 mt-3" style={{ fontFamily: 'system-ui, sans-serif' }}>
+                            Book now to secure your slot before it fills up
+                          </p>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+
                   ) : isAvailable ? (
+                    /* Fully available state */
                     <motion.div
                       key="available"
                       role="status"
@@ -283,10 +410,7 @@ export function Availability({ onBookDate }: AvailabilityProps) {
                             <Sparkles aria-hidden="true" className="w-4 h-4 text-white/60" />
                           </div>
                           <div className="border border-white/20 rounded-lg p-4 mb-6 bg-white/5">
-                            <time
-                              dateTime={toDateString(selectedDate)}
-                              className="text-white/90 text-lg tracking-tight"
-                            >
+                            <time dateTime={toDateString(selectedDate)} className="text-white/90 text-lg tracking-tight">
                               {formatDate(selectedDate)}
                             </time>
                           </div>
@@ -303,6 +427,7 @@ export function Availability({ onBookDate }: AvailabilityProps) {
                     </motion.div>
 
                   ) : (
+                    /* Fully booked state */
                     <motion.div
                       key="unavailable"
                       role="status"
@@ -330,10 +455,7 @@ export function Availability({ onBookDate }: AvailabilityProps) {
                         >
                           <p className="text-2xl mb-3">Sorry, We're Fully Booked</p>
                           <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 mb-4">
-                            <time
-                              dateTime={toDateString(selectedDate)}
-                              className="text-gray-700"
-                            >
+                            <time dateTime={toDateString(selectedDate)} className="text-gray-700">
                               {formatDate(selectedDate)}
                             </time>
                           </div>
@@ -341,7 +463,7 @@ export function Availability({ onBookDate }: AvailabilityProps) {
                             This date is already reserved. Please select another date from the calendar.
                           </p>
                           <Button
-                            onClick={() => { setSelectedDate(undefined); setIsAvailable(null); }}
+                            onClick={() => { setSelectedDate(undefined); setIsAvailable(null); setIsBusy(false); }}
                             size="lg"
                             variant="outline"
                             className="border-2 border-red-400 text-red-600 hover:bg-red-500 hover:text-white w-full text-lg py-6 transition-all hover:scale-105"
@@ -358,16 +480,13 @@ export function Availability({ onBookDate }: AvailabilityProps) {
           </Card>
         </motion.div>
 
-        {/* Footer note */}
         <motion.footer
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-8 text-sm text-gray-500"
-        >
-         
-        </motion.footer>
+        />
       </div>
     </section>
   );

@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import FloatingWhatsApp from '@/components/sections/Floatingwhatsapp';    
 
+
 export default function App() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -21,7 +22,8 @@ export default function App() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
+  
+    
   return (
     <div className="min-h-screen bg-white">
       <FloatingWhatsApp phoneNumber="+447511725288" />
