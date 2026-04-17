@@ -10,7 +10,7 @@ import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import Link from 'next/link';
 
 const WHATSAPP_NUMBER = '+447511725288';
-const EMAIL_ADDRESS = 'hello@throughmylens.co.uk';
+const EMAIL_ADDRESS = 'bookings@throughmylens.uk';
 
 // ── Validation helpers ────────────────────────────────────────────────────────
 
@@ -56,7 +56,7 @@ const EVENT_PACKAGES = [
     color: 'from-rose-50 to-pink-50',
     accent: 'text-rose-500',
     description: 'Maternity shoot for two',
-    features: ['1 hr session', '1 look', '1 video', 'Plus raw'],
+    features: ['1 hr session', '1 look', '1 video', 'Plus raw', '6 pictures'],
     disabled: false,
   },
   {
@@ -111,7 +111,7 @@ const EVENT_PACKAGES = [
     color: 'from-sky-50 to-blue-50',
     accent: 'text-sky-500',
     description: 'Celebrate your achievement',
-    features: ['1 hr session', '40+ edited photos', 'Online gallery', 'Print release'],
+    features: ['1 hr session', '6 pictures ', 'All raw pictures', '1 looks'],
     disabled: false,
   },
   {

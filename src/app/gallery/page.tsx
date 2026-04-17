@@ -16,6 +16,9 @@ const allImages = [
   { id: 6,  url: 'images/lifestyle/lifestyle3.jpg',   category: 'Graduation' },
   { id: 7,  url: 'images/lifestyle/lifestyle4.jpg',   category: 'Lifestyle' },
   { id: 8,  url: 'images/lifestyle/lifestyle5.jpg',   category: 'Brand' },
+  { id: 9,  url: 'images/lifestyle/lifestyle6.jpg',   category: 'Lifestyle' },
+  { id: 10, url: 'images/lifestyle/lifestyle7.jpg',   category: 'Lifestyle' },
+  { id: 11, url: 'images/lifestyle/lifestyle8.jpg',   category: 'Lifestyle' },
   // Maternity
   { id: 9,  url: 'images/maternity/mat1.jpg',         category: 'Family' },
   { id: 10, url: 'images/maternity/mat2.jpg',         category: 'Maternity' },
