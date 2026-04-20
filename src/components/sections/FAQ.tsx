@@ -5,7 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '..
 const faqs = [
   {
     question: 'How far in advance should I book?',
-    answer: 'We recommend booking 9–12 months ahead, particularly for weddings during peak season (May–September). London venues fill quickly, so early booking secures your date. We require a minimum of 2 weeks notice for all bookings — that said, we do occasionally have last-minute availability, so don\'t hesitate to reach out.',
+    answer: 'We recommend booking 2-3 months ahead, particularly for weddings during peak season (May–September). London venues fill quickly, so early booking secures your date. We require a minimum of 2 weeks notice for all bookings — that said, we do occasionally have last-minute availability, so don\'t hesitate to reach out.',
   },
   {
     question: 'What is your photography style?',

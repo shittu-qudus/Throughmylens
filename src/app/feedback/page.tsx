@@ -118,17 +118,10 @@ export default function FeedbackPage() {
       {/* Header */}
       <header className="px-6 py-6 border-b border-white/5">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-300 transition-colors"
-            style={{ fontFamily: 'system-ui, sans-serif' }}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </Link>
+          
           <div className="flex items-center gap-2 text-gray-500">
               <Image
-                          src="/images/logo.png"
+                          src="/images/logo2.png"
                           alt="Through My Lens Logo"
                           width={32}
                           height={32}
