@@ -172,7 +172,7 @@ export default function RootLayout({
               },
               priceRange: '££',
               telephone: '+447511725288',
-              email: 'bookings@throughmylens.uk', // Add your email
+              email: 'bookings@throughmylens.uk', 
               openingHours: ['Mon-Fri 09:00-18:00', 'Sat 10:00-16:00'],
               sameAs: [
                 'https://www.instagram.com/_throughmylens.uk?igsh=MXF1aTJrNnRleWRtcg==',
