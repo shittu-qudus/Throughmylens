@@ -63,8 +63,8 @@ export const metadata: Metadata = {
         type: 'image/jpeg',
       },
     ],
-    emails: ['info@throughmylens.uk'], // Add your email
-    phoneNumbers: ['+447511725288'], // Your phone number
+    emails: ['bookings@throughmylens.uk'],
+    phoneNumbers: ['+447511725288'], 
   },
   
   // Twitter/X
@@ -172,12 +172,11 @@ export default function RootLayout({
               },
               priceRange: '££',
               telephone: '+447511725288',
-              email: 'info@throughmylens.uk', // Add your email
+              email: 'bookings@throughmylens.uk', // Add your email
               openingHours: ['Mon-Fri 09:00-18:00', 'Sat 10:00-16:00'],
               sameAs: [
-                // Add your social media profiles when available
-                // 'https://www.instagram.com/throughmylens',
-                // 'https://www.facebook.com/throughmylens',
+                'https://www.instagram.com/_throughmylens.uk?igsh=MXF1aTJrNnRleWRtcg==',
+               'https://www.tiktok.com/@throughmylens.uk?_r=1&_t=ZN-95SRBeVvFMU'
                 // 'https://www.pinterest.com/throughmylens',
                 // 'https://www.linkedin.com/company/throughmylens',
               ],

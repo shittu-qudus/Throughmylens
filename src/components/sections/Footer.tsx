@@ -19,10 +19,10 @@ export function Footer() {
           >
             <div className="flex items-center gap-2 mb-4">
              <Image
-                           src="/images/logo.png"
+                           src="/images/logo2.png"
                            alt="Through My Lens Logo"
-                           width={32}
-                           height={32}
+                           width={82}
+                           height={82}
                            className="w-8 h-8 object-contain"
                          />
             </div>
@@ -41,8 +41,8 @@ export function Footer() {
             <h3 className="text-lg mb-4">Contact</h3>
             <div className="space-y-3 text-white/70">
               {[
-                { icon: FaPhone, text: '+44 20 7946 0958' },
-                { icon: FaEnvelope, text: 'hello@sophiereynolds.co.uk' },
+                { icon: FaPhone, text: '+447511725288' },
+                { icon: FaEnvelope, text: 'bookings@throughmylens.uk' },
                 { icon: FaMapMarkerAlt, text: 'London, United Kingdom' },
               ].map((item, index) => (
                 <motion.div
@@ -72,7 +72,7 @@ export function Footer() {
               {[
                 { href: 'https://www.instagram.com/_throughmylens.uk?igsh=MXF1aTJrNnRleWRtcg==', icon: FaInstagram, label: 'Instagram' },
                 { href: 'https://www.tiktok.com/@throughmylens.uk?_r=1&_t=ZN-95SRBeVvFMU', icon: FaTiktok, label: 'TikTok' },
-                { href: 'mailto:hello@sophiereynolds.co.uk', icon: FaEnvelope, label: 'Email' },
+                { href: 'mailto:bookings@throughmylens.uk', icon: FaEnvelope, label: 'Email' },
               ].map((social, index) => (
                 <motion.a
                   key={social.label}

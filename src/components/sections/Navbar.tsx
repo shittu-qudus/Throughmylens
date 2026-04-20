@@ -55,8 +55,8 @@ export function Navbar() {
            <Image
               src="/images/logo.png"
               alt="Through My Lens Logo"
-              width={32}
-              height={32}
+              width={82}
+              height={82}
               className="w-8 h-8 object-contain"
             />
             
