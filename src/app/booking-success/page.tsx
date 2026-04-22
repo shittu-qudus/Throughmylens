@@ -5,67 +5,38 @@ import { Check } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import { createCalendarEvent } from '../actions/createCalendarEvent';
 
 function SuccessContent() {
   const params    = useSearchParams();
   const sessionId = params.get('session_id');
 
-  const [emailStatus,    setEmailStatus]    = useState<'sending' | 'sent' | 'error'>('sending');
-  const [calendarStatus, setCalendarStatus] = useState<'pending' | 'created' | 'error' | 'skipped'>('pending');
+  const [emailStatus, setEmailStatus] = useState<'sending' | 'sent' | 'error'>('sending');
 
   useEffect(() => {
     const saveBooking = async () => {
       if (!sessionId) {
         setEmailStatus('error');
-        setCalendarStatus('skipped');
         return;
       }
 
       try {
-        // 1. Fetch session details from Stripe (your existing API route)
+        // Fetch session details from Stripe
         const res = await fetch(`/api/get-session-details?session_id=${sessionId}`);
         if (!res.ok) throw new Error('Failed to fetch session');
         const { metadata, amount_total } = await res.json();
 
-        // 2. Save booking to Google Sheet + send emails via Resend (your existing route)
+        // Save booking to Google Sheet + send both emails via Resend
         const saveRes = await fetch('/api/save-booking', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify({ metadata, amount_total, session_id: sessionId }),
         });
         if (!saveRes.ok) throw new Error('Failed to save booking');
+
         setEmailStatus('sent');
-
-        // 3. Create Google Calendar event so the date is marked Busy automatically
-        if (metadata?.booking_date) {
-          try {
-            await createCalendarEvent({
-              customerName:  metadata.customer_name   ?? '',
-              customerEmail: metadata.customer_email  ?? '',
-              customerPhone: metadata.customer_phone  ?? '',
-              bookingDate:   metadata.booking_date,       // YYYY-MM-DD
-              eventType:     metadata.event_type      ?? '',
-              depositPaid:   String((amount_total ?? 0) / 100),
-              fullPrice:     metadata.full_package_price  ?? '0',
-              remaining:     metadata.remaining_balance   ?? '0',
-              message:       metadata.message         ?? '',
-              sessionId,
-            });
-            setCalendarStatus('created');
-          } catch (calErr) {
-            // Calendar failure is non-fatal — email/sheet already saved
-            console.error('Calendar event error:', calErr);
-            setCalendarStatus('error');
-          }
-        } else {
-          setCalendarStatus('skipped');
-        }
-
       } catch (error) {
         console.error('Booking save error:', error);
         setEmailStatus('error');
-        setCalendarStatus('skipped');
       }
     };
 
@@ -97,7 +68,6 @@ function SuccessContent() {
           Payment received successfully.
         </p>
 
-        {/* Email status — unchanged from your original */}
         {emailStatus === 'sending' && (
           <div className="mb-4">
             <p className="text-gray-500 text-sm" style={{ fontFamily: 'system-ui, sans-serif' }}>
@@ -122,25 +92,6 @@ function SuccessContent() {
               We'll send it shortly. If you don't receive it, please contact us.
             </p>
           </div>
-        )}
-
-        {/* Calendar status — new, shown below email status */}
-        {calendarStatus === 'pending' && (
-          <div className="mb-4">
-            <p className="text-gray-400 text-xs" style={{ fontFamily: 'system-ui, sans-serif' }}>
-              Reserving your date on the calendar...
-            </p>
-          </div>
-        )}
-        {calendarStatus === 'created' && (
-          <p className="text-green-600 text-sm mb-4" style={{ fontFamily: 'system-ui, sans-serif' }}>
-            ✓ Your date has been reserved
-          </p>
-        )}
-        {calendarStatus === 'error' && (
-          <p className="text-amber-600 text-xs mb-4" style={{ fontFamily: 'system-ui, sans-serif' }}>
-            ⚠️ Date reservation pending — we'll confirm it shortly
-          </p>
         )}
 
         <p className="text-gray-500 text-sm mb-8" style={{ fontFamily: 'system-ui, sans-serif' }}>

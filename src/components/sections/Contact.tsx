@@ -227,7 +227,6 @@ export function Contact() {
     message: '',
   });
 
-  // Ref placed at the very top of the section so we can scroll there on every step change
   const topRef = useRef<HTMLDivElement>(null);
 
   const scrollToTop = () => {
@@ -236,7 +235,6 @@ export function Contact() {
 
   const goToStep = (next: Step) => {
     setStep(next);
-    // Use a tiny timeout so the new step has started rendering before we scroll
     setTimeout(scrollToTop, 50);
   };
 
@@ -302,6 +300,7 @@ export function Contact() {
       }
 
       const { url } = await res.json();
+      // Direct redirect to Stripe Checkout - no publishable key needed!
       window.location.href = url;
     } catch (err) {
       console.error('Checkout error:', err);
@@ -314,7 +313,6 @@ export function Contact() {
   const STEP_LABELS = ['Your Details', 'Choose Package', 'Our Policies', 'Review & Pay'];
   const stepIndex = STEPS.indexOf(step);
 
-  // Step 1 continue is disabled unless name, email AND date are all filled
   const detailsComplete = !!(formData.name && formData.email && formData.date);
 
   return (
@@ -323,10 +321,8 @@ export function Contact() {
       className="py-24 min-h-screen bg-[#fafaf8]"
       style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
     >
-      {/* Scroll anchor — sits above the header */}
       <div ref={topRef} />
 
-      {/* Background texture */}
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.015]"
         style={{
@@ -336,7 +332,6 @@ export function Contact() {
       />
 
       <div className="max-w-3xl mx-auto px-6">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -357,7 +352,6 @@ export function Contact() {
           </p>
         </motion.div>
 
-        {/* Progress Steps */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -399,8 +393,7 @@ export function Contact() {
         </motion.div>
 
         <AnimatePresence mode="wait">
-
-          {/* ── Step 1: Details ── */}
+          {/* Step 1: Details */}
           {step === 'details' && (
             <motion.div
               key="details"
@@ -412,8 +405,6 @@ export function Contact() {
               <Card className="p-8 md:p-10 border border-gray-100 shadow-sm bg-white rounded-2xl">
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-                    {/* Name */}
                     <div className="space-y-1.5">
                       <Label htmlFor="name" className="text-xs tracking-widest uppercase text-gray-500 font-normal" style={{ fontFamily: 'system-ui, sans-serif' }}>
                         Full Name *
@@ -429,8 +420,6 @@ export function Contact() {
                         style={{ fontFamily: 'system-ui, sans-serif' }}
                       />
                     </div>
-
-                    {/* Email */}
                     <div className="space-y-1.5">
                       <Label htmlFor="email" className="text-xs tracking-widest uppercase text-gray-500 font-normal" style={{ fontFamily: 'system-ui, sans-serif' }}>
                         Email Address *
@@ -452,8 +441,6 @@ export function Contact() {
                         </p>
                       )}
                     </div>
-
-                    {/* Phone */}
                     <div className="space-y-1.5">
                       <Label htmlFor="phone" className="text-xs tracking-widest uppercase text-gray-500 font-normal" style={{ fontFamily: 'system-ui, sans-serif' }}>
                         Phone Number
@@ -478,8 +465,6 @@ export function Contact() {
                         </p>
                       )}
                     </div>
-
-                    {/* Date — now required */}
                     <div className="space-y-1.5">
                       <Label htmlFor="date" className="text-xs tracking-widest uppercase text-gray-500 font-normal" style={{ fontFamily: 'system-ui, sans-serif' }}>
                         Event Date *
@@ -490,7 +475,7 @@ export function Contact() {
                         required
                         value={formData.date}
                         onChange={(e) => handleChange('date', e.target.value)}
-                        className={`border-gray-200 rounded-xl h-12 bg-gray-50/50 focus:bg-white transition-all duration-200 text-gray-800 ${!formData.date && detailsComplete === false ? '' : ''}`}
+                        className="border-gray-200 rounded-xl h-12 bg-gray-50/50 focus:bg-white transition-all duration-200 text-gray-800"
                         style={{ fontFamily: 'system-ui, sans-serif' }}
                       />
                       <p className="text-[11px] text-gray-400" style={{ fontFamily: 'system-ui, sans-serif' }}>
@@ -498,7 +483,6 @@ export function Contact() {
                       </p>
                     </div>
                   </div>
-
                   <div className="space-y-1.5">
                     <Label htmlFor="message" className="text-xs tracking-widest uppercase text-gray-500 font-normal" style={{ fontFamily: 'system-ui, sans-serif' }}>
                       Tell Us About Your Vision
@@ -513,7 +497,6 @@ export function Contact() {
                       style={{ fontFamily: 'system-ui, sans-serif' }}
                     />
                   </div>
-
                   <button
                     onClick={handleContinueFromDetails}
                     disabled={!detailsComplete}
@@ -528,7 +511,7 @@ export function Contact() {
             </motion.div>
           )}
 
-          {/* ── Step 2: Package Selection ── */}
+          {/* Step 2: Package Selection */}
           {step === 'package' && (
             <motion.div
               key="package"
@@ -541,16 +524,13 @@ export function Contact() {
               <p className="text-center text-gray-500 mb-6 font-light text-sm" style={{ fontFamily: 'system-ui, sans-serif' }}>
                 Select the package that fits your occasion
               </p>
-
               <div className="text-center text-xs text-amber-600 bg-amber-50/50 py-2 px-4 rounded-full w-fit mx-auto mb-2" style={{ fontFamily: 'system-ui, sans-serif' }}>
                 ✨ Multiple outfits on a single shoot attract extra fees
               </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {EVENT_PACKAGES.map((pkg) => {
                   const Icon = pkg.icon;
                   const isSelected = formData.eventType === pkg.value;
-
                   if (pkg.disabled) {
                     return (
                       <div key={pkg.value} className="relative">
@@ -587,11 +567,9 @@ export function Contact() {
                       </div>
                     );
                   }
-
                   const whatsappMsg = encodeURIComponent(`Hi! I'm interested in the ${pkg.label} package (£${pkg.price}). Could we chat before I book?`);
                   const emailSubject = encodeURIComponent(`Enquiry: ${pkg.label} Package`);
                   const emailBody = encodeURIComponent(`Hi,\n\nI'm interested in the ${pkg.label} package (£${pkg.price}) and would love to find out more before booking.\n\nLooking forward to hearing from you!`);
-
                   return (
                     <div key={pkg.value} className="relative">
                       <motion.button
@@ -651,7 +629,6 @@ export function Contact() {
                   );
                 })}
               </div>
-
               <div className="flex gap-3 mt-6">
                 <button
                   onClick={() => goToStep('details')}
@@ -673,7 +650,7 @@ export function Contact() {
             </motion.div>
           )}
 
-          {/* ── Step 3: Booking Policies ── */}
+          {/* Step 3: Booking Policies */}
           {step === 'policies' && (
             <motion.div
               key="policies"
@@ -696,7 +673,6 @@ export function Contact() {
                   </div>
                 </div>
               </Card>
-
               <div className="space-y-3">
                 {POLICIES.map((policy, idx) => {
                   const Icon = policy.icon;
@@ -731,13 +707,11 @@ export function Contact() {
                   );
                 })}
               </div>
-
               <Card className="p-5 border border-gray-100 bg-gray-50 rounded-2xl">
                 <p className="text-xs text-gray-500 leading-relaxed" style={{ fontFamily: 'system-ui, sans-serif' }}>
                   <strong className="text-gray-700">Before booking:</strong> We typically require you to reach out to us first to discuss your shoot. This allows us to understand your vision and plan the session properly. If you haven't contacted us yet, please do so before proceeding.
                 </p>
               </Card>
-
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -775,8 +749,6 @@ export function Contact() {
                     </p>
                   </div>
                 </label>
-
-                {/* Contact nudge */}
                 <div className="flex flex-wrap items-center gap-3 px-1 py-1" style={{ fontFamily: 'system-ui, sans-serif' }}>
                   <div className="flex items-center gap-1.5 text-gray-400">
                     <MessageCircle className="w-3.5 h-3.5" />
@@ -802,7 +774,6 @@ export function Contact() {
                   </div>
                 </div>
               </motion.div>
-
               <div className="flex gap-3 pt-1">
                 <button
                   onClick={() => goToStep('package')}
@@ -824,7 +795,7 @@ export function Contact() {
             </motion.div>
           )}
 
-          {/* ── Step 4: Review & Pay ── */}
+          {/* Step 4: Review & Pay */}
           {step === 'confirm' && (
             <motion.div
               key="confirm"
@@ -846,7 +817,6 @@ export function Contact() {
                     </div>
                     <p className="text-xl font-light text-gray-900">£{selectedPackage.price.toFixed(2)}</p>
                   </div>
-
                   <div className="border-t border-gray-100 mt-4 pt-4 space-y-2 mb-5">
                     {[
                       ['Client', formData.name],
@@ -860,7 +830,6 @@ export function Contact() {
                       </div>
                     ))}
                   </div>
-
                   <div className="border-t border-gray-100 pt-4 space-y-2" style={{ fontFamily: 'system-ui, sans-serif' }}>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-500">Full package price</span>
@@ -894,14 +863,12 @@ export function Contact() {
                   </div>
                 </Card>
               )}
-
               <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-50 border border-amber-100" style={{ fontFamily: 'system-ui, sans-serif' }}>
                 <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                 <p className="text-xs text-amber-700 leading-relaxed">
                   A remaining balance of <strong>£{remaining.toFixed(2)}</strong> is due immediately after your shoot. This is separate from today's deposit payment.
                 </p>
               </div>
-
               <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-100" style={{ fontFamily: 'system-ui, sans-serif' }}>
                 <svg className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -910,7 +877,6 @@ export function Contact() {
                   You'll be redirected to <strong className="text-gray-700">Stripe's secure checkout</strong> to complete payment. Your card details are handled entirely by Stripe — we never see or store them.
                 </p>
               </div>
-
               <div className="flex gap-3">
                 <button
                   onClick={() => goToStep('policies')}
