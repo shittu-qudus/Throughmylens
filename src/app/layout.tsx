@@ -67,8 +67,8 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: '/fav.ico',
-    // apple: '/apple-touch-icon.png',
+    icon: '/favicon.ico',
+    // apple: '/apple-touch-icon.png', // Keep commented as in your original
   },
 
   manifest: '/site.webmanifest',
@@ -106,7 +106,7 @@ export default function RootLayout({
               '@type': 'ProfessionalService',
               name: 'Through My Lens',
               url: 'https://www.throughmylens.uk',
-              logo: 'https://www.throughmylens.uk//fav.ico',
+              logo: 'https://www.throughmylens.uk/favicon.ico', 
               image: 'https://www.throughmylens.uk/og-image.jpg',
               description:
                 'Award-winning photography studio in London specialising in weddings, maternity, graduation and portrait sessions.',
